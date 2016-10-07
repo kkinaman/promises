@@ -55,14 +55,14 @@ var all = function(arrayOfPromises) {
         if (counter === 0) {
           arrayOfOutputs.sort(function(a, b) {
             return a[0] - b[0];
-          })
+          });
           resolve(arrayOfOutputs.map(x => x[1]));
         }
       }).catch(err => {
         reject(err);
       });
     });
-  })
+  });
 };
 
 
@@ -73,7 +73,15 @@ var all = function(arrayOfPromises) {
  */
 
 var race = function(arrayOfPromises) {
-  // TODO
+  return new Promise(function(resolve, reject) {
+    arrayOfPromises.forEach(function(promise) {
+      promise.then( result => {
+        resolve(result);
+      }).catch(err => {
+        reject(err);
+      });
+    });
+  });
 };
 
 // Export these functions so we can unit test them
