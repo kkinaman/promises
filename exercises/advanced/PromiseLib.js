@@ -28,8 +28,8 @@ var promisify = function(nodeStyleFn) {
           resolve(results);
         }
       });
-    })
-  }
+    });
+  };
 };
 
 

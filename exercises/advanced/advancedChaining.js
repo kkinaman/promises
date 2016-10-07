@@ -30,17 +30,13 @@ var searchCommonTagsFromGitHubProfiles = function(githubHandles) {
     profiles.push(lib.getGitHubProfile(handle));
   });
 
-  Promise.all(profiles).then(function(profiles) {
-    console.log(profiles);
+  return Promise.all(profiles).then(function(profiles) {
     return profiles.map( profile => profile.avatarUrl);
   })
   .then(function(urls) {
-    console.log(urls);
     return lib.authenticateImageTagger().then(function(token) {
-      console.log(token);
-      lib.tagImage(urls, token).then(function(tagsArray) {
-        console.log(tagsArray);
-        console.log(lib.getIntersection(tagsArray));
+      return lib.tagImage(urls, token).then(function(tagsArray) {
+        return lib.getIntersection(tagsArray);
       })
       .catch(function(err) {
         console.log(err);
@@ -50,7 +46,6 @@ var searchCommonTagsFromGitHubProfiles = function(githubHandles) {
 
 };
 
-// searchCommonTagsFromGitHubProfiles(['danthareja', 'kkinaman']);
 
 // Export these functions so we can unit test them
 module.exports = {
